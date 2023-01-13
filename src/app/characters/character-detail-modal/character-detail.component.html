@@ -1,0 +1,26 @@
+
+  <div mat-dialog-content>
+    <mat-card class="character-card">
+        <img mat-card-image src={{character.thumbnail.path}}.{{character.thumbnail.extension}} alt="{{character.name}}">
+        
+        <mat-card-title>
+            {{character.name}}
+        </mat-card-title>
+    
+        <mat-card-content>
+            {{character.description}}
+        </mat-card-content>
+    
+      
+    
+    </mat-card>
+
+  </div>
+  <div mat-dialog-actions class="md-dialog-actions">
+    <mat-card-footer class="card-footer">
+        <button (click)="close()" mat-raised-button color="accent">Fechar</button>
+    </mat-card-footer>
+  </div>
+  
+
+

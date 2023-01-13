@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChacactersService } from './chacacters.service';
-import { StorageServiceService } from '../shared/storage-service.service';
+import { StorageFavoritesService } from '../shared/storage-favorites.service';
 
 @Component({
   selector: 'app-characters',
@@ -9,45 +9,38 @@ import { StorageServiceService } from '../shared/storage-service.service';
 })
 export class CharactersComponent implements OnInit {
   search = '';
-  showFiller = false;
   allCharacters: Array<any>;
   allCharactersFiltered: Array<any>;
-  oderBy: string;
+  oderBy: string = 'name';
 
   
-
-  constructor(private service: ChacactersService,  private favoritesService: StorageServiceService) { }
+  constructor(private service: ChacactersService,  private favoritesService: StorageFavoritesService) { }
 
   ngOnInit(): void {
-
-    //if(!this.storage.getItem('favorites')) {
-    //  this.storage.setItem('favorites', new Set())
-    //}
-
-    this.service.getAllCharacters().subscribe(res=>{
-      this.allCharacters = res;
-      this.allCharactersFiltered = res;
-      console.log(res)})
-
-      //console.log('str', this.storage)
-
-  }
-
-  setFavorite(id){
-    //this.storage.setItem('favorites', {})
+    this.searchCharacters();
   }
 
   searchCharacters(){
     this.service.getAllCharactersByName(this.search, this.oderBy).subscribe(res=>{
-      console.log('oi', res)
+
       this.allCharactersFiltered = res;
-    })
+      const favorites: Array<any> = this.favoritesService.getFavorites();
+
+      if(this.favoritesService.getFavorites()) {
+        const tempArr = new Array();
+        favorites.forEach(character=> tempArr.push(character));
+        this.allCharactersFiltered = this.allCharactersFiltered.filter(character => 
+            !favorites.find(elem=> elem.id === character.id)
+        );
+        this.allCharactersFiltered.forEach(character =>tempArr.push(character));
+        this.allCharactersFiltered = tempArr;
+      }
+    });
   }
 
   filter(){
-    console.log('jonas', this.search);
     this.allCharactersFiltered = this.allCharacters.
-    filter(elem=> elem.name.toUpperCase().indexOf(this.search.toUpperCase())!==-1)
+    filter(elem=> elem.name.toUpperCase().indexOf(this.search.toUpperCase())!==-1);
   }
 
   showOnlyFavorites() {

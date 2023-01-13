@@ -7,11 +7,9 @@
     </mat-card-title>
 
     <mat-card-footer class="card-footer">
-        <a href="{{character.urls[0].url}}" target="_blank" fxFlex mat-flat-button color="primary">Detalhes </a>
-        <button *ngIf="!character.favorite else ElseBlock"  mat-raised-button color="accent" (click)="addToFavorites(character)">Favoritar</button>
-        <ng-template #ElseBlock>
-            <button  mat-raised-button color="accent" (click)="removeFromFavorites(character)">Desfavoritar</button>
-        </ng-template>
+        <a (click)="openCharacterDetails()" target="_blank" fxFlex mat-flat-button color="primary">Detalhes </a>
+        <button class="ml8" *ngIf="!character.favorite  && favoritesSize < 5"  mat-raised-button color="accent" (click)="addToFavorites(character)">
+            Favoritar&nbsp;<mat-icon>favorite_border</mat-icon></button>
+        <button class="ml8" *ngIf="character.favorite" mat-raised-button color="accent" (click)="removeFromFavorites(character)">Desfavoritar</button>
     </mat-card-footer>
-
 </mat-card>

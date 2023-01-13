@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class StorageServiceService {
+export class StorageFavoritesService {
 
   favoritos: Array<any> = new Array();
   constructor() {}
@@ -18,10 +18,9 @@ export class StorageServiceService {
         this.favoritos.push(character)
         localStorage.setItem('favorites', JSON.stringify(this.favoritos));
       } else {
-        alert('Sua lista de favoritos está cheia')
+        alert('Sua lista de favoritos está cheia');
       }
     } else {
-      console.log('vazio')
       character.favorite = true;
       this.favoritos.push(character);
       localStorage.setItem('favorites',JSON.stringify(this.favoritos));
@@ -31,7 +30,8 @@ export class StorageServiceService {
   getFavorites(){
     if(localStorage.getItem('favorites')) {
       return JSON.parse(localStorage.getItem('favorites'))
-    }
+    } else 
+    return false
   }
 
   clearFavorites(){
@@ -42,6 +42,13 @@ export class StorageServiceService {
     this.favoritos = this.getFavorites();
     this.favoritos = this.favoritos.filter(elem=>elem.id !== character.id);
     localStorage.setItem('favorites', JSON.stringify(this.favoritos));
+  }
+
+  getSize() {
+    if(localStorage.getItem('favorites')){
+      return JSON.parse(localStorage.getItem('favorites')).length;
+    } 
+    return 0;
   }
 
 }

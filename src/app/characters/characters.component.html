@@ -1,19 +1,11 @@
 <mat-drawer-container autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
-
-      <p>Auto-resizing sidenav</p>
-      <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-      <button (click)="showFiller = !showFiller" mat-raised-button>
-        Toggle extra text
-      </button>
     </mat-drawer>
   
-  
-        <mat-toolbar>
+        <mat-toolbar class="mv-toolbar">
+           <img src="./../../assets/img/marvel-logo.png" alt="marvel-logo.png">
          </mat-toolbar>
-      <button type="button" mat-button (click)="drawer.toggle()">
-        Toggle sidenav
-      </button>
+
       <br>
    
       <div class="search">
@@ -24,18 +16,17 @@
           <input matInput placeholder="Ex. Spiderman" name="search"[(ngModel)]="search">
         </mat-form-field></form>
     
-        <button style="margin-left: 16px;" mat-raised-button color="accent" 
+        <button class="ml8" mat-raised-button color="accent" 
         (click)="searchCharacters()" [disabled]="!search"
         >Buscar</button>
         
-        <button style="margin-left: 16px;" mat-raised-button color="accent" (click)="showOnlyFavorites()">Mostrar Meus Favoritos</button>
+        <button class="ml8" mat-raised-button color="accent" (click)="showOnlyFavorites()">Mostrar Meus Favoritos</button>
         
         <div class="ml8">
           <mat-form-field appearance="fill">
             <mat-label>Ordenar por</mat-label>
             <select [(ngModel)]="oderBy" matNativeControl>
-              <option value="" selected></option>
-              <option value="name">nome crescente</option>
+              <option value="name" selected>nome crescente</option>
               <option value="-name">nome decrescente</option>
               <option value="modified">data de modificação crescente</option>
               <option value="-modified">data de modificação decrescente</option>
@@ -43,17 +34,15 @@
           </mat-form-field>
         </div>
       </div>
-
-      <br>
-      <br>
+      
       <br>
       <br>
 
-      <div class="" style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
+      <div class="characters-content">
             <app-character
             *ngFor="let character  of allCharactersFiltered" [character]="character"
-            (favoriteRemoved)="showOnlyFavorites()"
+            (modifiedFavorites)="searchCharacters()"
             ></app-character>
-    </div> 
+      </div> 
 </mat-drawer-container>
   
